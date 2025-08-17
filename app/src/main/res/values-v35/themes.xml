@@ -1,5 +1,6 @@
-<resources xmlns:tools="http://schemas.android.com/tools">
-    <!-- Base application theme. -->
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
     <style name="Theme.Fyra" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <!-- Primary brand color. -->
         <item name="colorPrimary">@color/purple_500</item>
@@ -13,16 +14,6 @@
         <item name="android:statusBarColor">@color/colorMoonlightGrey</item>
         <!-- Customize your theme here. -->
         <item name="android:windowLightStatusBar">true</item>
-    </style>
-
-    <style name="RoundedDialogTheme" parent="ThemeOverlay.MaterialComponents.MaterialAlertDialog">
-        <item name="shapeAppearanceOverlay">@style/RoundedDialogCorners</item>
-        <item name="windowMinWidthMajor">0%</item>
-        <item name="windowMinWidthMinor">0%</item>
-    </style>
-
-    <style name="RoundedDialogCorners">
-        <item name="cornerFamily">rounded</item>
-        <item name="cornerSize">26dp</item> <!-- Adjust radius -->
+        <item name="android:windowOptOutEdgeToEdgeEnforcement">true</item>
     </style>
 </resources>

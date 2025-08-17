@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
+    android:orientation="horizontal">
+
+    <RelativeLayout
+        android:layout_weight="1"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ImageView
+            android:id="@+id/create_acc_screen_logo"
+            android:layout_width="140dp"
+            android:layout_height="140dp"
+            android:layout_marginTop="@dimen/margin_16"
+            android:layout_marginStart="@dimen/margin_16"
+            android:layout_centerInParent="true"
+            android:contentDescription="@null"
+            android:src="@drawable/logo_shadow" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_weight="1"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:id="@+id/create_acc_screen_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_marginTop="@dimen/margin_16"
+            android:layout_marginStart="@dimen/margin_16"
+            android:shadowColor="#55000000"
+            android:shadowDx="2"
+            android:shadowDy="2"
+            android:shadowRadius="3"
+            android:text="@string/create_acc_screen_title"
+            android:textSize="26sp" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/create_acc_email_input_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/create_acc_screen_title"
+            android:layout_marginStart="@dimen/margin_16"
+            android:layout_marginTop="@dimen/margin_16"
+            android:layout_marginEnd="@dimen/margin_16"
+            android:hint="@string/login_email_input_layout_hint"
+            app:boxBackgroundMode="outline"
+            app:boxCornerRadiusBottomEnd="@dimen/twelve"
+            app:boxCornerRadiusBottomStart="@dimen/twelve"
+            app:boxCornerRadiusTopEnd="@dimen/twelve"
+            app:boxCornerRadiusTopStart="@dimen/twelve"
+            app:boxStrokeColor="@color/teal_700"
+            app:boxStrokeWidth="2dp"
+            app:boxStrokeWidthFocused="3dp"
+            app:startIconDrawable="@drawable/baseline_email_24"
+            app:startIconTint="@color/teal_700">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/create_acc_email_edit_text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textEmailAddress"
+                android:padding="@dimen/padding_16"
+                android:paddingStart="@dimen/padding_56"
+                android:textColor="@android:color/black" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/create_acc_password_input_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/create_acc_email_input_layout"
+            android:layout_centerInParent="true"
+            android:layout_marginStart="@dimen/margin_16"
+            android:layout_marginTop="@dimen/margin_16"
+            android:layout_marginEnd="@dimen/margin_16"
+            android:hint="@string/login_password_input_layout_hint"
+            app:boxBackgroundMode="outline"
+            app:boxCornerRadiusBottomEnd="@dimen/twelve"
+            app:boxCornerRadiusBottomStart="@dimen/twelve"
+            app:boxCornerRadiusTopEnd="@dimen/twelve"
+            app:boxCornerRadiusTopStart="@dimen/twelve"
+            app:boxStrokeColor="@color/teal_700"
+            app:boxStrokeWidth="2dp"
+            app:boxStrokeWidthFocused="3dp"
+            app:endIconMode="password_toggle"
+            app:endIconTint="@color/teal_700"
+            app:startIconDrawable="@drawable/baseline_lock_24"
+            app:startIconTint="@color/teal_700">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/create_acc_password_edit_text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textPassword"
+                android:padding="16dp"
+                android:paddingStart="56dp"
+                android:textColor="@android:color/black" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/create_acc_create_account_btn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/create_acc_password_input_layout"
+            android:padding="@dimen/padding_16"
+            app:backgroundTint="@android:color/holo_red_light"
+            app:cornerRadius="@dimen/sixteenth"
+            android:layout_marginStart="@dimen/margin_16"
+            android:layout_marginEnd="@dimen/margin_16"
+            android:layout_marginTop="@dimen/margin_8"
+            android:text="@string/create_acc_create_account_btn_text"
+            android:textSize="18sp"
+            android:textStyle="bold"/>
+    </RelativeLayout>
+
+</LinearLayout>

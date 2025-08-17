@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:padding="0dp"
+    android:gravity="center"
+    app:cardCornerRadius="26dp">
+
+    <ImageView
+        android:id="@+id/loading_icon"
+        android:layout_width="140dp"
+        android:layout_height="140dp"
+        android:adjustViewBounds="true"
+        android:scaleType="fitCenter"/>
+
+
+</com.google.android.material.card.MaterialCardView>

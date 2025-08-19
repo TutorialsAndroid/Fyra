@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <nl.dionsegijn.konfetti.xml.KonfettiView
+        android:id="@+id/konfettiView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+    <ImageView
+        android:id="@+id/welcome_screen_img_bg"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:contentDescription="@null"
+        android:scaleType="fitXY"
+        android:src="@drawable/img2"/>
+
+<!--    <View-->
+<!--        android:id="@+id/welcome_screen_img_layer"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="match_parent"-->
+<!--        android:background="#80FFFFFF" />-->
+
+    <TextView
+        android:id="@+id/welcome_screen_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@id/welcome_screen_user_photo"
+        android:layout_centerInParent="true"
+        android:layout_marginBottom="@dimen/margin_16"
+        android:shadowColor="#55000000"
+        android:shadowDx="4"
+        android:shadowDy="6"
+        android:shadowRadius="3"
+        android:text="@string/welcome_screen_title"
+        android:textSize="40sp"
+        android:textStyle="bold" />
+
+    <ImageView
+        android:id="@+id/welcome_screen_user_photo"
+        android:layout_width="140dp"
+        android:layout_height="140dp"
+        android:layout_centerInParent="true" />
+
+    <TextView
+        android:id="@+id/welcome_screen_user_id"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/welcome_screen_user_photo"
+        android:layout_centerInParent="true"
+        android:layout_marginTop="@dimen/margin_16"
+        android:shadowColor="#55000000"
+        android:shadowDx="2"
+        android:shadowDy="2"
+        android:shadowRadius="3"
+        android:textSize="24sp"
+        tools:text="1998" />
+
+    <TextView
+        android:id="@+id/welcome_screen_user_email"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/welcome_screen_user_id"
+        android:layout_centerInParent="true"
+        android:layout_marginTop="@dimen/margin_16"
+        android:textSize="18sp"
+        tools:text="loremipsum@gmail.com" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/welcome_screen_continue_btn"
+        android:layout_width="210dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/welcome_screen_user_email"
+        android:layout_centerInParent="true"
+        android:layout_marginTop="@dimen/margin_16"
+        android:padding="@dimen/padding_16"
+        android:text="@string/welcome_screen_continue_btn_text"
+        app:cornerRadius="@dimen/sixteenth" />
+
+</RelativeLayout>

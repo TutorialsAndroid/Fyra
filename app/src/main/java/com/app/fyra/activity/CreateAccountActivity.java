@@ -1,5 +1,6 @@
 package com.app.fyra.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -10,10 +11,15 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.app.fyra.LoadingDialogFragment;
 import com.app.fyra.R;
+import com.app.fyra.model.CreateUser;
+import com.app.fyra.utility.Constants;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.FirebaseFirestore;
+
+import java.util.Random;
 
 public class CreateAccountActivity extends AppCompatActivity {
 
@@ -26,6 +32,7 @@ public class CreateAccountActivity extends AppCompatActivity {
     private TextWatcher emailInputTextWatcher, passwordInputTextWatcher;
 
     private FirebaseAuth mAuth;
+    private FirebaseFirestore db;
 
     private LoadingDialogFragment loadingDialog;
 
@@ -50,6 +57,7 @@ public class CreateAccountActivity extends AppCompatActivity {
 
         // Initialize Firebase Auth
         mAuth = FirebaseAuth.getInstance();
+        db = FirebaseFirestore.getInstance();
 
         setContentView(R.layout.activity_create_account);
 
@@ -113,7 +121,7 @@ public class CreateAccountActivity extends AppCompatActivity {
      * @noinspection DataFlowIssue
      */
     private void createAccount() {
-        loadingDialog();
+        showLoadingDialog();
 
         String email = emailIF.getText().toString();
         String password = passwordIF.getText().toString();
@@ -135,8 +143,8 @@ public class CreateAccountActivity extends AppCompatActivity {
                     if (task.isSuccessful()) {
                         // Sign in success, update UI with the signed-in user's information
                         Log.d(TAG, "createUserWithEmail:success");
+                        createUser(email, password);
                         clearInputField();
-                        dismissLoadingDialog();
                     } else {
                         // If sign in fails, display a message to the user.
                         Log.w(TAG, "createUserWithEmail:failure", task.getException());
@@ -170,7 +178,7 @@ public class CreateAccountActivity extends AppCompatActivity {
         passwordIF.setText(null);
     }
 
-    private void loadingDialog() {
+    private void showLoadingDialog() {
         loadingDialog = new LoadingDialogFragment();
         loadingDialog.show(getSupportFragmentManager(), "loading");
     }
@@ -179,5 +187,61 @@ public class CreateAccountActivity extends AppCompatActivity {
         if (loadingDialog != null) {
             loadingDialog.dismiss();
         }
+    }
+
+    private void createUser(String email, String password) {
+        generateUniqueId(id -> {
+            String profilePhoto = "https://api.dicebear.com/9.x/adventurer/png?seed="+id;
+            // Now we are sure id is unique
+            CreateUser createUser = new CreateUser(id, email, password, profilePhoto);
+
+            db.collection(Constants.USERS)
+                    .document()
+                    .set(createUser)
+                    .addOnSuccessListener(aVoid -> {
+                        Log.d("FIRESTORE", "User created with id: " + id);
+
+                        dismissLoadingDialog();
+
+                        startActivity(new Intent(CreateAccountActivity.this, WelcomeScreen.class));
+                        finish();
+                    })
+                    .addOnFailureListener(e -> {
+                        Log.e("FIRESTORE", "Error creating user", e);
+                    });
+        });
+    }
+
+    /**
+     * Generates a unique 4-digit ID and passes it to the callback.
+     */
+    private void generateUniqueId(OnIdGeneratedListener listener) {
+        Random random = new Random();
+        int id = 1000 + random.nextInt(9000);
+
+        // Check if ID already exists in Firestore
+        db.collection(Constants.USERS)
+                .whereEqualTo("id", id)
+                .get()
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        if (!task.getResult().isEmpty()) {
+                            // ID exists → try again recursively
+                            generateUniqueId(listener);
+                        } else {
+                            // ID is unique → return it
+                            listener.onIdGenerated(id);
+                        }
+                    } else {
+                        Log.e("FIRESTORE", "Error checking ID", task.getException());
+                    }
+                });
+    }
+
+    /**
+     * Simple callback interface for async ID generation
+     */
+    interface OnIdGeneratedListener {
+        void onIdGenerated(int id);
     }
 }

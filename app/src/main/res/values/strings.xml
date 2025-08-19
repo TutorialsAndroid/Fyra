@@ -1,5 +1,6 @@
 <resources>
     <string name="app_name">Fyra</string>
+    <string name="something_went_wrong">Something went wrong…</string>
 
     <!-- Activity Login   -->
     <string name="login_screen_title">Login to your Account</string>
@@ -12,4 +13,10 @@
     <!-- Activity Create Account   -->
     <string name="create_acc_screen_title">Create your Account</string>
     <string name="create_acc_create_account_btn_text">CREATE</string>
+
+    <!-- Activity Welcome  -->
+    <string name="welcome_screen_title">WELCOME</string>
+    <string name="welcome_screen_continue_btn_text">Let\'s go</string>
+    <string name="user_id">#%1$d</string>
+
 </resources>

@@ -15,6 +15,8 @@ import androidx.core.content.ContextCompat;
 
 import com.app.fyra.LoadingDialogFragment;
 import com.app.fyra.R;
+import com.app.fyra.model.AppUser;
+import com.app.fyra.model.UserSession;
 import com.app.fyra.utility.Constants;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.DataSource;
@@ -122,6 +124,9 @@ public class WelcomeScreen extends AppCompatActivity {
                             String email = document.getString("email");
                             String profilePhoto = document.getString("profilePhoto");
 
+                            AppUser user = new AppUser(id, email, profilePhoto);
+                            UserSession.getInstance().setUser(user); // ✅ Global session
+
                             //Update the UI
                             idTextView.setText(getString(R.string.user_id, id));
                             emailTextView.setText(email);
@@ -169,5 +174,4 @@ public class WelcomeScreen extends AppCompatActivity {
             loadingDialog.dismiss();
         }
     }
-
 }

@@ -69,23 +69,21 @@ public class HomeActivity extends AppCompatActivity {
 
     private void initializeViews() {
         MaterialToolbar toolbar = findViewById(R.id.home_toolbar);
-        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                FirebaseAuth mAuth = FirebaseAuth.getInstance();
-                mAuth.signOut();
+        toolbar.setNavigationOnClickListener(view -> {
+            FirebaseAuth mAuth = FirebaseAuth.getInstance();
+            mAuth.signOut();
 
-                if (mAuth.getCurrentUser() == null) {
-                    // ✅ Sign-out successful
-                    Log.d("Auth", "User signed out successfully");
-                    startActivity(new Intent(HomeActivity.this, LoginActivity.class));
-                    finish();
-                } else {
-                    // ❌ Sign-out failed (very rare, usually if signOut() wasn't called correctly)
-                    Log.d("Auth", "Sign-out failed");
-                }
-
+            if (mAuth.getCurrentUser() == null) {
+                // ✅ Sign-out successful
+                Log.d("Auth", "User signed out successfully");
+                startActivity(new Intent(HomeActivity.this, LoginActivity.class));
+                finish();
+            } else {
+                // ❌ Sign-out failed (very rare, usually if signOut() wasn't called correctly)
+                Log.d("Auth", "Sign-out failed");
+                Toast.makeText(HomeActivity.this, getString(R.string.something_went_wrong), Toast.LENGTH_SHORT).show();
             }
+
         });
         recyclerView = findViewById(R.id.recyclerViewUsers);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));

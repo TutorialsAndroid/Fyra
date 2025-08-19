@@ -13,15 +13,21 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.app.fyra.LoadingDialogFragment;
 import com.app.fyra.R;
+import com.app.fyra.model.AppUser;
+import com.app.fyra.model.UserSession;
+import com.app.fyra.utility.Constants;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 public class LoginActivity extends AppCompatActivity {
 
     private FirebaseAuth mAuth;
+    private FirebaseFirestore db = FirebaseFirestore.getInstance();
     private MaterialButton createAccountBtn, loginAccountBtn;
     private TextInputLayout emailIL, passwordIL;
     private TextInputEditText emailIF, passwordIF;
@@ -95,9 +101,7 @@ public class LoginActivity extends AppCompatActivity {
                 FirebaseUser user = mAuth.getCurrentUser();
                 if (user != null) {
                     clearInputField();
-                    dismissLoadingDialog();
-                    startActivity(new Intent(LoginActivity.this, HomeActivity.class));
-                    finish();
+                    fetchUserData(user.getEmail());
                 }
             } else {
                 // If sign in fails, display a message to the user.
@@ -182,5 +186,34 @@ public class LoginActivity extends AppCompatActivity {
         if (loadingDialog != null) {
             loadingDialog.dismiss();
         }
+    }
+
+    private void fetchUserData(String userEmail) {
+        db.collection(Constants.USERS)
+                .whereEqualTo("email", userEmail)
+                .get()
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful() && !task.getResult().isEmpty()) {
+                        DocumentSnapshot document = task.getResult().getDocuments().get(0);
+
+                        int id = document.getLong("id").intValue();
+                        String email = document.getString("email");
+                        String profilePhoto = document.getString("profilePhoto");
+
+                        AppUser user = new AppUser(id, email, profilePhoto);
+                        UserSession.getInstance().setUser(user); // ✅ Global session
+
+                        // Move to HomeActivity
+                        dismissLoadingDialog();
+                        startActivity(new Intent(this, HomeActivity.class));
+                        finish();
+
+                    } else {
+                        // Error or user not found → clear session and go to login
+                        UserSession.getInstance().clearSession();
+                        startActivity(new Intent(this, LoginActivity.class));
+                        finish();
+                    }
+                });
     }
 }

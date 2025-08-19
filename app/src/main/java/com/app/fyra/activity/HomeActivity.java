@@ -2,6 +2,8 @@ package com.app.fyra.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.View;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
@@ -14,6 +16,7 @@ import com.app.fyra.adapter.UsersAdapter;
 import com.app.fyra.model.AppUser;
 import com.app.fyra.model.UserSession;
 import com.app.fyra.utility.Constants;
+import com.google.android.material.appbar.MaterialToolbar;
 import com.google.android.material.button.MaterialButton;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentSnapshot;
@@ -65,6 +68,25 @@ public class HomeActivity extends AppCompatActivity {
     }
 
     private void initializeViews() {
+        MaterialToolbar toolbar = findViewById(R.id.home_toolbar);
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                FirebaseAuth mAuth = FirebaseAuth.getInstance();
+                mAuth.signOut();
+
+                if (mAuth.getCurrentUser() == null) {
+                    // ✅ Sign-out successful
+                    Log.d("Auth", "User signed out successfully");
+                    startActivity(new Intent(HomeActivity.this, LoginActivity.class));
+                    finish();
+                } else {
+                    // ❌ Sign-out failed (very rare, usually if signOut() wasn't called correctly)
+                    Log.d("Auth", "Sign-out failed");
+                }
+
+            }
+        });
         recyclerView = findViewById(R.id.recyclerViewUsers);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         adapter = new UsersAdapter(this, userList, user -> {

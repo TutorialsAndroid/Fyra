@@ -20,6 +20,7 @@ import com.google.android.material.button.MaterialButton;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.ListenerRegistration;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -35,6 +36,17 @@ public class HomeActivity extends AppCompatActivity {
     private UsersAdapter adapter;
     private List<AppUser> userList = new ArrayList<>();
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
+
+    private ListenerRegistration usersListener;
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (usersListener != null) {
+            usersListener.remove();
+        }
+    }
+
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -69,22 +81,24 @@ public class HomeActivity extends AppCompatActivity {
     }
 
     private void fetchAllUsers() {
-        db.collection(Constants.USERS)
-                .get()
-                .addOnCompleteListener(task -> {
-                    if (task.isSuccessful() && task.getResult() != null) {
+        usersListener = db.collection(Constants.USERS)
+                .addSnapshotListener((snapshots, e) -> {
+                    if (e != null) {
+                        Toast.makeText(this, "Error: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                        return;
+                    }
+
+                    if (snapshots != null) {
                         userList.clear();
-                        for (DocumentSnapshot doc : task.getResult()) {
+                        for (DocumentSnapshot doc : snapshots) {
                             AppUser user = doc.toObject(AppUser.class);
 
-                            // Don’t show the current logged-in user in the list
+                            // Don’t show the current logged-in user
                             if (!user.getEmail().equals(FirebaseAuth.getInstance().getCurrentUser().getEmail())) {
                                 userList.add(user);
                             }
                         }
                         adapter.notifyDataSetChanged();
-                    } else {
-                        Toast.makeText(this, "Failed to load users", Toast.LENGTH_SHORT).show();
                     }
                 });
     }

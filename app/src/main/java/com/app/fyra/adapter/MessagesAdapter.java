@@ -56,6 +56,16 @@ public class MessagesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
 
         if (holder instanceof SentViewHolder) {
             ((SentViewHolder) holder).textMessage.setText(message.getText());
+
+            // status indicator
+            String status = message.getStatus();
+            if ("sent".equals(status)) {
+                ((SentViewHolder) holder).textStatus.setText("✓ Sent");
+            } else if ("delivered".equals(status)) {
+                ((SentViewHolder) holder).textStatus.setText("✓ Delivered");
+            } else if ("seen".equals(status)) {
+                ((SentViewHolder) holder).textStatus.setText("✓✓ Seen");
+            }
         } else if (holder instanceof ReceivedViewHolder) {
             ((ReceivedViewHolder) holder).textMessage.setText(message.getText());
         }
@@ -67,11 +77,12 @@ public class MessagesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
     }
 
     static class SentViewHolder extends RecyclerView.ViewHolder {
-        TextView textMessage;
+        TextView textMessage, textStatus;
 
         SentViewHolder(View itemView) {
             super(itemView);
             textMessage = itemView.findViewById(R.id.textMessageSent);
+            textStatus = itemView.findViewById(R.id.textStatus);
         }
     }
 

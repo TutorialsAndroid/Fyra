@@ -23,6 +23,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class ChatActivity extends AppCompatActivity {
@@ -40,6 +41,23 @@ public class ChatActivity extends AppCompatActivity {
     private RecyclerView recyclerView;
 
     private String chatRoomId;
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        db.collection("chats")
+                .document(chatRoomId)
+                .collection("messages")
+                .whereEqualTo("receiverId", String.valueOf(currentUserId))
+                .whereIn("status", Arrays.asList("sent", "delivered"))
+                .get()
+                .addOnSuccessListener(query -> {
+                    for (DocumentSnapshot doc : query.getDocuments()) {
+                        doc.getReference().update("status", "seen");
+                    }
+                });
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -87,7 +105,8 @@ public class ChatActivity extends AppCompatActivity {
                 String.valueOf(currentUserId),
                 String.valueOf(receiverId),
                 text,
-                System.currentTimeMillis()
+                System.currentTimeMillis(),
+                "sent" // initially sent
         );
 
         db.collection("chats")
@@ -113,15 +132,31 @@ public class ChatActivity extends AppCompatActivity {
                     messageList.clear();
                     for (DocumentSnapshot doc : snapshots.getDocuments()) {
                         Message msg = doc.toObject(Message.class);
+                        if (msg == null) continue;
+
+                        // If current user is the receiver
+                        if (msg.getReceiverId().equals(String.valueOf(currentUserId))) {
+                            String status = msg.getStatus();
+
+                            // If it’s not already seen → mark as seen
+                            if (!"seen".equals(status)) {
+                                doc.getReference().update("status", "seen");
+                            }
+                        }
+
                         messageList.add(msg);
                     }
+
                     adapter.notifyDataSetChanged();
                     recyclerView.scrollToPosition(messageList.size() - 1);
                 });
     }
 
+
+
     private String getChatRoomId(int user1, int user2) {
         return (user1 < user2) ? user1 + "_" + user2 : user2 + "_" + user1;
     }
+    
 }
 

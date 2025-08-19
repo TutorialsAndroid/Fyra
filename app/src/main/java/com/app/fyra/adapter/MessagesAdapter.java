@@ -18,8 +18,8 @@ public class MessagesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
     private static final int TYPE_SENT = 1;
     private static final int TYPE_RECEIVED = 2;
 
-    private List<Message> messages;
-    private int currentUserId;
+    private final List<Message> messages;
+    private final int currentUserId;
 
     public MessagesAdapter(List<Message> messages, int currentUserId) {
         this.messages = messages;
@@ -60,11 +60,9 @@ public class MessagesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
             // status indicator
             String status = message.getStatus();
             if ("sent".equals(status)) {
-                ((SentViewHolder) holder).textStatus.setText("✓ Sent");
-            } else if ("delivered".equals(status)) {
-                ((SentViewHolder) holder).textStatus.setText("✓ Delivered");
+                ((SentViewHolder) holder).textStatus.setText(R.string.sent_status);
             } else if ("seen".equals(status)) {
-                ((SentViewHolder) holder).textStatus.setText("✓✓ Seen");
+                ((SentViewHolder) holder).textStatus.setText(R.string.seen_status);
             }
         } else if (holder instanceof ReceivedViewHolder) {
             ((ReceivedViewHolder) holder).textMessage.setText(message.getText());

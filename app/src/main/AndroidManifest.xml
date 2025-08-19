@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
 
+    <uses-permission android:name="android.permission.INTERNET"/>
+
     <application
         android:name=".App"
         android:allowBackup="true"
@@ -24,7 +26,8 @@
         <activity android:name=".activity.CreateAccountActivity"/>
         <activity android:name=".activity.WelcomeScreen"/>
         <activity android:name=".activity.HomeActivity"/>
-        <activity android:name=".activity.ChatActivity"/>
+        <activity android:name=".activity.ChatActivity"
+            android:windowSoftInputMode="adjustResize|stateHidden"/>
     </application>
 
 </manifest>

@@ -2,7 +2,6 @@ package com.app.fyra.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.widget.ImageView;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
@@ -15,7 +14,6 @@ import com.app.fyra.adapter.UsersAdapter;
 import com.app.fyra.model.AppUser;
 import com.app.fyra.model.UserSession;
 import com.app.fyra.utility.Constants;
-import com.bumptech.glide.Glide;
 import com.google.android.material.button.MaterialButton;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentSnapshot;
@@ -38,6 +36,7 @@ public class HomeActivity extends AppCompatActivity {
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
 
     private ListenerRegistration usersListener;
+    private ListenerRegistration incomingCallReg;
 
     @Override
     protected void onDestroy() {
@@ -45,6 +44,7 @@ public class HomeActivity extends AppCompatActivity {
         if (usersListener != null) {
             usersListener.remove();
         }
+        if (incomingCallReg != null) incomingCallReg.remove();
     }
 
 

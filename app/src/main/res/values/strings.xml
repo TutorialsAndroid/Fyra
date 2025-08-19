@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name">Fyra</string>
     <string name="something_went_wrong">Something went wrong…</string>
+    <string name="user_id">#%1$d</string>
 
     <!-- Activity Login   -->
     <string name="login_screen_title">Login to your Account</string>
@@ -17,6 +18,11 @@
     <!-- Activity Welcome  -->
     <string name="welcome_screen_title">WELCOME</string>
     <string name="welcome_screen_continue_btn_text">Let\'s go</string>
-    <string name="user_id">#%1$d</string>
+
+    <!-- Activity Chat   -->
+    <string name="textInputLayoutMessageHint">Type a message</string>
+    <string name="buttonSendCCText">Send</string>
+    <string name="sent_status">Sent</string>
+    <string name="seen_status">Seen</string>
 
 </resources>

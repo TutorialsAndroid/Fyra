@@ -12,22 +12,23 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.app.fyra.R;
 import com.app.fyra.model.AppUser;
+import com.app.fyra.model.AppUser2;
 import com.bumptech.glide.Glide;
 
 import java.util.List;
 
 public class UsersAdapter extends RecyclerView.Adapter<UsersAdapter.UserViewHolder> {
 
-    private List<AppUser> userList;
+    private List<AppUser2> userList;
     private Context context;
     private OnUserClickListener listener;
 
     // Define interface
     public interface OnUserClickListener {
-        void onUserClick(AppUser user);
+        void onUserClick(AppUser2 user);
     }
 
-    public UsersAdapter(Context context, List<AppUser> userList, OnUserClickListener listener) {
+    public UsersAdapter(Context context, List<AppUser2> userList, OnUserClickListener listener) {
         this.context = context;
         this.userList = userList;
         this.listener = listener;
@@ -42,18 +43,18 @@ public class UsersAdapter extends RecyclerView.Adapter<UsersAdapter.UserViewHold
 
     @Override
     public void onBindViewHolder(@NonNull UserViewHolder holder, int position) {
-        AppUser user = userList.get(position);
+        AppUser2 user2 = userList.get(position);
 
-        holder.textID.setText(context.getString(R.string.user_id, user.getId()));
+        holder.textID.setText(context.getString(R.string.user_id, user2.getId()));
 
         // Load image with Glide/Picasso
         Glide.with(context)
-                .load(user.getProfilePhoto())
+                .load(user2.getProfilePhoto())
                 .placeholder(R.drawable.ic_user)
                 .circleCrop()
                 .into(holder.imageProfile);
 
-        holder.itemView.setOnClickListener(v -> listener.onUserClick(user));
+        holder.itemView.setOnClickListener(v -> listener.onUserClick(user2));
     }
 
     @Override

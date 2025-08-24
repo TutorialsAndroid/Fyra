@@ -74,6 +74,12 @@ public class MessagesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         return messages.size();
     }
 
+    public void setMessages(List<Message> newMessages) {
+        this.messages.clear();
+        this.messages.addAll(newMessages);
+        notifyDataSetChanged(); // later we can replace with DiffUtil
+    }
+
     static class SentViewHolder extends RecyclerView.ViewHolder {
         TextView textMessage, textStatus;
 

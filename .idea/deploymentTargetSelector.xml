@@ -4,10 +4,10 @@
     <selectionStates>
       <SelectionState runConfigName="app">
         <option name="selectionMode" value="DIALOG" />
-        <DropdownSelection timestamp="2025-08-19T02:32:39.266789400Z">
+        <DropdownSelection timestamp="2025-08-19T09:05:12.380570Z">
           <Target type="DEFAULT_BOOT">
             <handle>
-              <DeviceId pluginId="PhysicalDevice" identifier="serial=RZ8RA03NDCY" />
+              <DeviceId pluginId="LocalEmulator" identifier="path=C:\Users\victu\.android\avd\Pixel_9_Pro_XL.avd" />
             </handle>
           </Target>
         </DropdownSelection>
@@ -15,17 +15,12 @@
           <targets>
             <Target type="DEFAULT_BOOT">
               <handle>
-                <DeviceId pluginId="PhysicalDevice" identifier="serial=RZ8RA03NDCY" />
-              </handle>
-            </Target>
-            <Target type="DEFAULT_BOOT">
-              <handle>
-                <DeviceId pluginId="LocalEmulator" identifier="path=C:\Users\victu\.android\avd\Pixel_4.avd" />
-              </handle>
-            </Target>
-            <Target type="DEFAULT_BOOT">
-              <handle>
                 <DeviceId pluginId="LocalEmulator" identifier="path=C:\Users\victu\.android\avd\Pixel_9_Pro_XL.avd" />
+              </handle>
+            </Target>
+            <Target type="DEFAULT_BOOT">
+              <handle>
+                <DeviceId pluginId="LocalEmulator" identifier="path=C:\Users\victu\.android\avd\Pixel_Tablet.avd" />
               </handle>
             </Target>
           </targets>

@@ -30,4 +30,13 @@
         <item name="android:windowBackground">@drawable/splash_screen_bg</item>
         <item name="colorPrimaryDark">@android:color/white</item>
     </style>
+
+    <style name="Theme.Fyra.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
+    <style name="Theme.Fyra.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <style name="Theme.Fyra.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 </resources>
